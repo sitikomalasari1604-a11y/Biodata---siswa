@@ -211,7 +211,8 @@ function tampilkanSiswa() {
     }
 
     hasil.forEach((s) => elDaftar.appendChild(buatKartu(s)));
-}
+   hasilGuru.forEach((g) => elDaftar.appendChild(buatKartuGuru(g))); 
+    }
 
 function buatKartu(s) {
     const kartu = el("article", "kartu");
