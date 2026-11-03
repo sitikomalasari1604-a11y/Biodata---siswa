@@ -194,7 +194,14 @@ function tampilkanSiswa() {
                           s.nis.toLowerCase().includes(kataKunci);
         return cocokKelas && cocokCari;
     });
-
+    
+  const hasilGuru = semuaGuru.filter((g) => {
+        const cocokCari = !kataKunci ||
+                          g.nama_guru.toLowerCase().includes(kataKunci) ||
+                          g.nip.toLowerCase().includes(kataKunci);
+        return cocokCari;
+    });
+    
     elJumlah.textContent = hasil.length + " dari " + semuaSiswa.length + " siswa";
     elDaftar.replaceChildren();
 
@@ -239,7 +246,30 @@ function buatKartu(s) {
     kartu.appendChild(isi);
     return kartu;
 }
+// KARTU GURU
+function buatKartuGuru(g) {
+    const kartu = el("article", "kartu");
+    kartu.style.setProperty("--hue", 210);
+    kartu.appendChild(el("div", "pita"));
 
+    const isi = el("div", "isi");
+    const foto = el("div", "foto");
+
+    foto.textContent = inisial(g.nama_guru || "Guru");
+
+    isi.appendChild(foto);
+    isi.appendChild(el("h2", "nama", g.nama_guru));
+    isi.appendChild(el("p", "nis", "NIP " + g.nip));
+
+    const rincian = el("dl", "rincian");
+    tambahBaris(rincian, "Jenis kelamin", g.jenis_kelamin);
+    tambahBaris(rincian, "Tanggal lahir", formatTanggal(g.tanggal_lahir));
+
+    isi.appendChild(rincian);
+    kartu.appendChild(isi);
+
+    return kartu;
+}
 // FUNGSI BANTU
 function el(tag, kelas, teks) {
     const e = document.createElement(tag);
