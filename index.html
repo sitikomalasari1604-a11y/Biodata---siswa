@@ -151,7 +151,7 @@ const elCari = document.getElementById("cari");
 const elKelas = document.getElementById("filterKelas");
 
 let semuaSiswa = [];
-let semuaguru = [];
+let semuaGuru = [];
 
 // LANGKAH 3: AMBIL DATA
 async function muatData() {
@@ -163,7 +163,7 @@ async function muatData() {
         .order("nama");
 
     if (error) {
-        console.error(errorGuru);
+        console.error(error);
         tampilkanPesan("Data tidak bisa dimuat. Periksa URL dan anon key, nama tabel, serta policy RLS di Supabase.", true);
         return;
     }
@@ -172,7 +172,7 @@ const { data: dataGuru, error: errorGuru } = await db
     .select("nip, nama_guru, jenis_kelamin, tanggal_lahir");
     
     if (errorGuru) {
-        console. error(error);
+        console. error(errorGuru);
         tampilkanpesan("Data guru tidak bisa dimuat.", true);
         return;
     }
