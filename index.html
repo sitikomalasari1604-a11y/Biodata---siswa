@@ -172,8 +172,8 @@ const { data: dataGuru, error: errorGuru } = await db
     .select("nip, nama_guru, jenis_kelamin, tanggal_lahir");
     
     if (errorGuru) {
-        console. error(errorGuru);
-        tampilkanpesan("Data guru tidak bisa dimuat.", true);
+        console.error(errorGuru);
+        tampilkanPesan("Data guru tidak bisa dimuat.", true);
         return;
     }
     semuaGuru = dataGuru;
