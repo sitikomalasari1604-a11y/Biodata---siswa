@@ -169,8 +169,7 @@ async function muatData() {
     }
 const { data: dataGuru, error: errorGuru } = await db
     .from("guru")
-    .select("nip, nama_guru, jenis_kelamin, tanggal_lahir") 
-    . order("nama");
+    .select("nip, nama_guru, jenis_kelamin, tanggal_lahir");
     
     if (errorGuru) {
         console.error(errorGuru);
