@@ -309,57 +309,6 @@ elCari.addEventListener("input", tampilkanData);
 elKelas.addEventListener("change", tampilkanData);
 elRole.addEventListener("change", tampilkanData);
    
-// Membuka nodal form
-function bukaFormTambah() {
-    document.getElementById("modalTambah").style.display = "flex";
-}
-
-// Menutup nodal form
-function tutupFormTambah() {
-    document.getElementById("modalTambah").style.display = "none";
-}
-
-// Proses Simpan Data ke Supabase
-document.getElementById("formTambah").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    
-    const role = document.getElementById("tambahRole").value;
-    const nama = document.getElementById("tambahNama").value;
-    const nisNip = document.getElementById("tambahNis").value;
-    const kelasJurusan = document.getElementById("tambahKelas").value;
-
-    let targetTabel = "";
-    let dataBaru = {};
-
-    if (role === "Guru") {
-        targetTabel = "guru";
-        dataBaru = {
-            nama_guru: nama,   // Sesuai dengan kolom di tabel Supabase guru
-            nip: nisNip,
-            jurusan: kelasJurusan
-        };
-    } else {
-        targetTabel = "siswa";
-        dataBaru = {
-            nama: nama,
-            nis: nisNip,
-            kelas: kelasJurusan
-        };
-    }
-
-    const { error } = await db.from(targetTabel).insert([dataBaru]);
-
-    if (error) {
-        alert("Gagal menyimpan data: " + error.message);
-    } else {
-        alert("Data berhasil ditambahkan!");
-        tutupFormTambah();
-        muatData(); 
-        this.reset();
-    }
-});
-  
-
 muatData();
 </script>
 </body>
