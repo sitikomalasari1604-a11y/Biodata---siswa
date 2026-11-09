@@ -308,12 +308,17 @@ function isiPilihanKelas() {
 elCari.addEventListener("input", tampilkanData);
 elKelas.addEventListener("change", tampilkanData);
 elRole.addEventListener("change", tampilkanData);
-// Membuka modal form
+     elCari.addEventListener("input", tampilkanData);
+    elKelas.addEventListener("change", tampilkanData);
+    elRole.addEventListener("change", tampilkanData);
+}
+
+// Membuka nodal form
 function bukaFormTambah() {
     document.getElementById("modalTambah").style.display = "flex";
 }
 
-// Menutup modal form
+// Menutup nodal form
 function tutupFormTambah() {
     document.getElementById("modalTambah").style.display = "none";
 }
@@ -357,7 +362,7 @@ document.getElementById("formTambah").addEventListener("submit", async function(
         this.reset();
     }
 });
-
+  
 
 muatData();
 </script>
