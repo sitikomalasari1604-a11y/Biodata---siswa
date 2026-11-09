@@ -248,7 +248,7 @@ function buatKartu(item) {
   isi.appendChild(el("p", "nis", item.nomorId));
 
   const rincian = el("dl", "rincian");
-  tambahBaris(rincian, item.role === "Guru" ? "Jurusan / Mapel" : "Kelas", item.grup);
+  tambahBaris(rincian, item.role === "Guru" ? "jabatan" : "Kelas", item.grup);
   if (item.jenis_kelamin) tambahBaris(rincian, "Jenis kelamin", item.jenis_kelamin);
   if (item.tanggal_lahir) tambahBaris(rincian, "Tanggal lahir", formatTanggal(item.tanggal_lahir));
   if (item.alamat) tambahBaris(rincian, "Alamat", item.alamat);
