@@ -1,599 +1,315 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1d4ed8">
-  <title>TEKNIK KOMPUTER JARINGAN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      color-scheme: light dark;
-      --bg: #eef2f7;
-      --card: #ffffff;
-      --text: #14213d;
-      --muted: #5b667a;
-      --border: #d6dde8;
-      --accent: #1d4ed8;
-      --accent-hover: #1e40af;
-      --danger: #b42318;
-      --success: #067647;
-      --focus: #93c5fd;
-      --shadow: 0 8px 24px rgb(20 33 61 / 7%);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0e1522;
-        --card: #172033;
-        --text: #e8edf6;
-        --muted: #98a4ba;
-        --border: #2a3650;
-        --accent: #6c9bff;
-        --accent-hover: #8ab0ff;
-        --danger: #ff8b80;
-        --success: #6ce9a6;
-        --focus: #6c9bff;
-        --shadow: 0 8px 24px rgb(0 0 0 / 18%);
-      }
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      line-height: 1.55;
-    }
-
-    button, input, select { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
-
-    .wrap {
-      width: min(1100px, 100%);
-      margin: 0 auto;
-      padding: 28px 16px 48px;
-    }
-
-    .site-header { margin-bottom: 18px; }
-    .site-header h1 {
-      margin: 0;
-      font-size: clamp(1.35rem, 4vw, 1.9rem);
-      line-height: 1.25;
-      font-weight: 800;
-      letter-spacing: -0.035em;
-    }
-    .site-header p { margin: 8px 0 0; color: var(--muted); }
-
-    .nav, .controls, .actions, .form-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-    .nav { margin: 20px 0; }
-
-    button, input, select {
-      min-height: 42px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-    }
-
-    button {
-      padding: 10px 14px;
-      background: var(--card);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      transition: background .15s ease, transform .15s ease;
-    }
-    button:hover { transform: translateY(-1px); }
-    button:focus-visible, input:focus-visible, select:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-    button:disabled { opacity: .6; cursor: wait; transform: none; }
-    .nav-button.active, .primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-    .nav-button.active:hover, .primary:hover { background: var(--accent-hover); }
-    .delete-button { color: var(--danger); }
-
-    input, select {
-      width: 100%;
-      padding: 10px 12px;
-      background: var(--card);
-      color: var(--text);
-    }
-    #search { flex: 1 1 240px; }
-    #filter { flex: 0 1 190px; }
-
-    .notice, .status {
-      margin: 16px 0;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--card);
-      color: var(--muted);
-      font-size: .9rem;
-      overflow-wrap: anywhere;
-    }
-    .status { color: var(--text); }
-    .status.error { color: var(--danger); }
-    .status.success { color: var(--success); }
-
-    .panel {
-      margin: 20px 0;
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-    }
-    .panel h2 { margin: 0 0 16px; font-size: 1.2rem; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-    .field label { font-size: .9rem; font-weight: 700; }
-    .field small { color: var(--muted); font-size: .8rem; }
-    .full-width { grid-column: 1 / -1; }
-    .form-actions { margin-top: 16px; }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
-      align-items: stretch;
-      gap: 16px;
-    }
-    .card {
-      min-width: 0;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-    }
-    .card-banner {
-      height: 62px;
-      background: linear-gradient(135deg, #4b5320, #84934a);
-    }
-    .card-body { padding: 0 16px 16px; text-align: center; }
-    .avatar {
-      display: grid;
-      width: 82px;
-      height: 82px;
-      margin: -41px auto 10px;
-      place-items: center;
-      overflow: hidden;
-      border: 4px solid var(--card);
-      border-radius: 50%;
-      background: #dbeafe;
-      color: #1e40af;
-      font-size: 1.4rem;
-      font-weight: 800;
-    }
-    .avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .card-name {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-    .card-id { margin: 4px 0 12px; color: var(--muted); font-size: .85rem; overflow-wrap: anywhere; }
-    .details { margin: 0; text-align: left; font-size: .9rem; }
-    .details-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 8px 0;
-      border-top: 1px solid var(--border);
-    }
-    .details-row dt { color: var(--muted); }
-    .details-row dd {
-      max-width: 65%;
-      margin: 0;
-      text-align: right;
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
-    .actions { margin-top: 14px; }
-    .actions button { flex: 1; }
-
-    .count { margin: 14px 0; color: var(--muted); font-size: .9rem; }
-    .empty {
-      grid-column: 1 / -1;
-      margin: 0;
-      padding: 36px 14px;
-      border: 1px dashed var(--border);
-      border-radius: 14px;
-      color: var(--muted);
-      text-align: center;
-    }
-    [hidden] { display: none !important; }
-
-    @media (max-width: 560px) {
-      .wrap { padding: 22px 12px 36px; }
-      .form-grid { grid-template-columns: minmax(0, 1fr); }
-      .full-width { grid-column: auto; }
-      .panel { padding: 16px; }
-      .nav > button { flex: 1 1 auto; }
-      #filter { flex: 1 1 100%; }
-      .cards { grid-template-columns: minmax(0, 1fr); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>Teknik Komputer Jaringan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fff0f5;
+  --kartu: #ffffff;
+  --teks: #4a2e35;
+  --teks-redup: #8c6b73;
+  --garis: #f7d6e0;
+  --aksen: #d8819d;
+  --pita: #f4acb7;
+  --btn-tambah: #e5989b;
+  --btn-tambah-hover: #b56576;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #2b1e23;
+    --kartu: #3a2830;
+    --teks: #fce1e4;
+    --teks-redup: #d4a3ae;
+    --garis: #523945;
+    --aksen: #f4acb7;
+    --pita: #6d4355;
+    --btn-tambah: #b56576;
+    --btn-tambah-hover: #e5989b;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--teks);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+.wadah { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+header { display: flex; justify-content: space-between; align-items: flex-start; }
+header h1 { margin: 0 0 4px; font-size: 1.75rem; font-weight: 800; color: var(--teks); }
+header p { margin: 0; color: var(--teks-redup); }
+.btn-tambah {
+  background: var(--btn-tambah);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+.btn-tambah:hover { background: var(--btn-tambah-hover); }
+.kontrol { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 8px; }
+.kontrol input, .kontrol select {
+  font: inherit;
+  color: var(--teks);
+  background: var(--kartu);
+  border: 1px solid var(--garis);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.kontrol input { flex: 1 1 220px; }
+.kontrol select { flex: 0 1 180px; }
+.kontrol input:focus-visible, .kontrol select:focus-visible {
+  outline: 2px solid var(--aksen);
+  outline-offset: 1px;
+}
+.jumlah { color: var(--teks-redup); font-size: 0.9rem; margin: 0 0 16px; }
+.daftar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.kartu {
+  background: var(--kartu);
+  border: 1px solid var(--garis);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.pita { height: 60px; background: var(--pita); }
+.isi { padding: 0 16px 16px; text-align: center; flex: 1; display: flex; flex-direction: column; }
+.foto {
+  width: 76px; height: 76px;
+  margin: -38px auto 8px;
+  border-radius: 50%;
+  border: 4px solid var(--kartu);
+  background: #ffe5ec;
+  color: #b56576;
+  display: grid; place-items: center; font-weight: 800; font-size: 1.5rem; overflow: hidden;
+}
+.foto img { width: 100%; height: 100%; object-fit: cover; }
+.nama { margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--teks); }
+.nis { margin: 0 0 12px; color: var(--teks-redup); font-size: 0.85rem; }
+.rincian { margin: 0 0 16px; text-align: left; font-size: 0.85rem; flex: 1; }
+.rincian div {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 6px 0; border-top: 1px solid var(--garis);
+}
+.rincian dt { color: var(--teks-redup); }
+.rincian dd { margin: 0; font-weight: 600; text-align: right; color: var(--teks); }
+.aksi { display: flex; justify-content: center; gap: 8px; margin-top: auto; padding-top: 8px; }
+.btn-edit, .btn-hapus {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn-edit { background: #e09f67; }
+.btn-edit:hover { background: #c8834a; }
+.btn-hapus { background: #e67070; }
+.btn-hapus:hover { background: #c94f4f; }
+.pesan { grid-column: 1 / -1; text-align: center; padding: 40px 16px; color: var(--teks-redup); }
+.pesan.galat { color: #d9534f; }
+@media (prefers-color-scheme: dark) { .pesan.galat { color: #ff9b9b; } }
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <header class="site-header">
-      <h1 id="pageTitle">TEKNIK COMPUTER JARINGAN</h1>
-      <p id="pageDescription">Data siswa Teknik Komputer dan Jaringan.</p>
-    </header>
-
-    <nav class="nav" aria-label="Menu utama">
-      <button id="showStudents" class="nav-button active" type="button" aria-pressed="true">Data Siswa</button>
-      <button id="showTeachers" class="nav-button" type="button" aria-pressed="false">Data Guru</button>
-      <button id="addButton" class="primary" type="button">+ Tambah Data</button>
-    </nav>
-
-    <section id="formPanel" class="panel" hidden>
-      <h2 id="formTitle">Tambah Siswa</h2>
-      <form id="dataForm">
-        <div class="form-grid">
-          <div class="field">
-            <label id="idLabel" for="identity">NIS *</label>
-            <input id="identity" name="identity" required maxlength="30" autocomplete="off">
-          </div>
-          <div class="field">
-            <label for="name">Nama lengkap *</label>
-            <input id="name" name="name" required minlength="2" maxlength="100" autocomplete="name">
-          </div>
-          <div class="field" id="classField">
-            <label for="className">Kelas *</label>
-            <input id="className" name="className" maxlength="50" placeholder="XI-TKJ-1" required>
-          </div>
-          <div class="field" id="genderField">
-            <label for="gender">Jenis kelamin *</label>
-            <select id="gender" name="gender" required>
-              <option value="">Pilih jenis kelamin</option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-          </div>
-          <div class="field" id="subjectField" hidden>
-            <label for="subject">Mata pelajaran *</label>
-            <input id="subject" name="subject" maxlength="100" placeholder="Administrasi Sistem Jaringan">
-          </div>
-          <div class="field" id="positionField" hidden>
-            <label for="position">Jabatan</label>
-            <input id="position" name="position" maxlength="100" placeholder="Guru TKJ">
-          </div>
-          <div class="field full-width">
-            <label for="photo">URL foto (opsional)</label>
-            <input id="photo" name="photo" type="url" maxlength="1000" placeholder="https://contoh.com/foto.jpg">
-            <small>Gunakan tautan foto yang bisa diakses browser.</small>
-          </div>
-        </div>
-        <p id="formStatus" class="status" role="status" aria-live="polite" hidden></p>
-        <div class="form-actions">
-          <button id="saveButton" class="primary" type="submit">Simpan Data</button>
-          <button id="cancelButton" type="button">Batal</button>
-        </div>
-      </form>
-    </section>
-
-    <div class="controls">
-      <input id="search" type="search" placeholder="Cari nama atau NIS" aria-label="Cari data">
-      <select id="filter" aria-label="Filter berdasarkan kelas">
-        <option value="">Semua kelas</option>
-      </select>
+<div class="wadah">
+  <header>
+    <div>
+      <h1>Teknik Komputer Jaringan</h1>
+      <p>Cari berdasarkan role.</p>
     </div>
-
-    <p id="count" class="count" aria-live="polite"></p>
-    <main id="cards" class="cards" aria-live="polite"></main>
+    <button id="btntambah" class="btn-tambah" onclick="bukaFormTambah()">+ Tambah Data</button>
+  </header>
+  <div class="kontrol">
+    <input id="cari" type="search" placeholder="Cari nama, NIS, atau NIP" aria-label="Cari nama, NIS, atau NIP">
+    <select id="filterRole" aria-label="Filter role">
+      <option value="">Semua (Guru / Siswa)</option>
+      <option value="Siswa">Siswa</option>
+      <option value="Guru">Guru</option>
+    </select>
+    <select id="filterKelas" aria-label="Filter kelas">
+      <option value="">Semua Kelas / Mapel</option>
+    </select>
   </div>
+  <p id="jumlah" class="jumlah" aria-live="polite"></p>
+  <main id="daftar" class="daftar"></main>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    "use strict";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+// KONEKSI SUPABASE PROYEK KAMU
+const SUPABASE_URL = "https://lofuhkytztjtcvqgnvtf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZnVoa3l0enRqdGN2cWdudnRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MjQ4MzQsImV4cCI6MjEwNzUwMDgzNH0.9uPRI6n0mHGmwXbDUmPcJrD2TLqnpCUq8yUuwAelrIU";
 
-    // Gunakan publishable/anon key saja. Jangan pernah menaruh service_role key di HTML.
-    const SUPABASE_URL = "https://lofuhkytztjtcvqgnvtf.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZnVoa3l0enRqdGN2cWdudnRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MjQ4MzQsImV4cCI6MjEwNzUwMDgzNH0.9uPRI6n0mHGmwXbDUmPcJrD2TLqnpCUq8yUuwAelrIU";
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const $ = (id) => document.getElementById(id);
+const elDaftar = document.getElementById("daftar");
+const elJumlah = document.getElementById("jumlah");
+const elCari = document.getElementById("cari");
+const elKelas = document.getElementById("filterKelas");
+const elRole = document.getElementById("filterRole");
+let semuaData = [];
 
-    let mode = "siswa";
-    let students = [];
-    let teachers = [];
-    let editing = false;
-    let originalRecord = null;
-    let busy = false;
+async function muatData() {
+  tampilkanPesan("Memuat data...");
 
-    function makeElement(tag, className = "", text = "") {
-      const element = document.createElement(tag);
-      if (className) element.className = className;
-      if (text !== undefined && text !== null) element.textContent = text;
-      return element;
-    }
+  // Mengambil tabel siswa dan guru secara aman
+  const resSiswa = await db.from("siswa").select("*");
+  const resGuru = await db.from("guru").select("*");
 
-    function setFormStatus(message, type = "info") {
-      const status = $("formStatus");
-      status.hidden = false;
-      status.className = "status" + (type === "error" ? " error" : type === "success" ? " success" : "");
-      status.textContent = message;
-    }
+  const dataSiswa = resSiswa.data || [];
+  const dataGuru = resGuru.data || [];
 
-    function isValidPhotoUrl(value) {
-      if (!value) return true;
-      try {
-        const url = new URL(value);
-        return url.protocol === "https:" || url.protocol === "http:";
-      } catch {
-        return false;
-      }
-    }
+  // Format data siswa
+  const siswaFormatted = dataSiswa.map(s => ({
+    ...s,
+    role: "Siswa",
+    nomorId: "NIS. " + (s.nis || "-"),
+    grup: s.kelas || "-"
+  }));
 
-    function getInitials(name) {
-      return String(name || "?")
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((part) => part.charAt(0).toUpperCase())
-        .join("");
-    }
+  // Format data guru (mencakup opsi kolom 'jurusan', 'mapel', atau 'kelas')
+  const guruFormatted = dataGuru.map(g => ({
+    ...g,
+    role: "Guru",
+    nomorId: "NIP. " + (g.nip || "-"),
+    grup: g.jurusan || g.mapel || g.kelas || "-"
+  }));
 
-    function addDetail(list, label, value) {
-      if (value === null || value === undefined || value === "") return;
-      const row = makeElement("div", "details-row");
-      row.append(
-        makeElement("dt", "", label),
-        makeElement("dd", "", String(value))
-      );
-      list.appendChild(row);
-    }
+  semuaData = [...siswaFormatted, ...guruFormatted];
+  
+  isiPilihanKelas();
+  tampilkanData();
+}
 
-    function showEmpty(message) {
-      $("cards").replaceChildren(makeElement("p", "empty", message));
-      $("count").textContent = "";
-    }
+function tampilkanData() {
+  const kataKunci = elCari.value.trim().toLowerCase();
+  const kelasDipilih = elKelas.value;
+  const roleDipilih = elRole.value;
 
-    async function loadStudents() {
-      showEmpty("Memuat data siswa...");
-      const { data, error } = await db
-        .from("siswa")
-        .select("nis,nama,kelas,jenis_kelamin,foto_url")
-        .order("nama", { ascending: true });
+  const hasil = semuaData.filter((item) => {
+    const cocokRole = !roleDipilih || item.role === roleDipilih;
+    const cocokKelas = !kelasDipilih || item.grup === kelasDipilih;
+    
+    const idCari = String(item.nis || item.nip || "");
+    const namaCari = String(item.nama || "");
+    const cocokCari = !kataKunci || 
+                      namaCari.toLowerCase().includes(kataKunci) || 
+                      idCari.toLowerCase().includes(kataKunci);
+                      
+    return cocokRole && cocokKelas && cocokCari;
+  });
 
-      if (error) {
-        console.error("Gagal memuat siswa:", error);
-        showEmpty("Data siswa gagal dimuat. Periksa tabel, nama kolom, koneksi, dan policy RLS Supabase.");
-        return;
-      }
+  elJumlah.textContent = hasil.length + " dari " + semuaData.length + " data";
+  elDaftar.replaceChildren();
 
-      students = data || [];
-      updateClassFilter();
-      renderCards();
-    }
+  if (hasil.length === 0) {
+    tampilkanPesan("Tidak ada data yang cocok.");
+    return;
+  }
 
-    async function loadTeachers() {
-      showEmpty("Memuat data guru...");
-      const { data, error } = await db
-        .from("guru")
-        .select("nip,nama,mata_pelajaran,jabatan,foto_url")
-        .order("nama", { ascending: true });
+  hasil.forEach((item) => elDaftar.appendChild(buatKartu(item)));
+}
 
-      if (error) {
-        console.error("Gagal memuat guru:", error);
-        showEmpty("Data guru gagal dimuat. Pastikan tabel guru memiliki kolom nip, nama, mata_pelajaran, jabatan, dan foto_url.");
-        return;
-      }
+function buatKartu(item) {
+  const kartu = el("article", "kartu");
+  kartu.appendChild(el("div", "pita"));
+  const isi = el("div", "isi");
 
-      teachers = data || [];
-      renderCards();
-    }
+  const foto = el("div", "foto");
+  if (item.foto_url) {
+    const gambar = document.createElement("img");
+    gambar.src = item.foto_url;
+    gambar.alt = "Foto " + item.nama;
+    gambar.loading = "lazy";
+    gambar.onerror = () => foto.replaceChildren(document.createTextNode(inisial(item.nama)));
+    foto.appendChild(gambar);
+  } else {
+    foto.textContent = inisial(item.nama);
+  }
 
-    function makeCard(record, isTeacher) {
-      const card = makeElement("article", "card");
-      const body = makeElement("div", "card-body");
-      const avatar = makeElement("div", "avatar");
-      const id = isTeacher ? record.nip : record.nis;
+  isi.appendChild(foto);
+  isi.appendChild(el("h2", "nama", item.nama || "-"));
+  isi.appendChild(el("p", "nis", item.nomorId));
 
-      card.appendChild(makeElement("div", "card-banner"));
+  const rincian = el("dl", "rincian");
+  tambahBaris(rincian, item.role === "Guru" ? "jabatan" : "Kelas", item.grup);
+  if (item.jenis_kelamin) tambahBaris(rincian, "Jenis kelamin", item.jenis_kelamin);
+  if (item.tanggal_lahir) tambahBaris(rincian, "Tanggal lahir", formatTanggal(item.tanggal_lahir));
+  if (item.alamat) tambahBaris(rincian, "Alamat", item.alamat);
+  
+  isi.appendChild(rincian);
 
-      if (record.foto_url && isValidPhotoUrl(record.foto_url)) {
-        const image = document.createElement("img");
-        image.src = record.foto_url;
-        image.alt = "Foto " + (record.nama || "profil");
-        image.loading = "lazy";
-        image.referrerPolicy = "no-referrer";
-        image.onerror = () => {
-          avatar.replaceChildren(document.createTextNode(getInitials(record.nama)));
-        };
-        avatar.appendChild(image);
-      } else {
-        avatar.textContent = getInitials(record.nama);
-      }
+  const aksi = el("div", "aksi");
+  const btnEdit = el("button", "btn-edit", "Edit");
+  const btnHapus = el("button", "btn-hapus", "Hapus");
+  aksi.appendChild(btnEdit);
+  aksi.appendChild(btnHapus);
+  
+  isi.appendChild(aksi);
+  kartu.appendChild(isi);
+  return kartu;
+}
 
-      body.append(
-        avatar,
-        makeElement("h2", "card-name", record.nama || "Tanpa nama"),
-        makeElement("p", "card-id", (isTeacher ? "NIP: " : "NIS: ") + (id || "-"))
-      );
+function el(tag, kelas, teks) {
+  const e = document.createElement(tag);
+  if (kelas) e.className = kelas;
+  if (teks) e.textContent = teks;
+  return e;
+}
 
-      const details = makeElement("dl", "details");
-      if (isTeacher) {
-        addDetail(details, "Mata pelajaran", record.mata_pelajaran);
-        addDetail(details, "Jabatan", record.jabatan);
-      } else {
-        addDetail(details, "Kelas", record.kelas);
-        addDetail(details, "Jenis kelamin", record.jenis_kelamin);
-      }
-      body.appendChild(details);
+function tambahBaris(dl, label, nilai) {
+  if (!nilai) return;
+  const baris = el("div");
+  baris.appendChild(el("dt", "", label));
+  baris.appendChild(el("dd", "", nilai));
+  dl.appendChild(baris);
+}
 
-      const actions = makeElement("div", "actions");
-      const editButton = makeElement("button", "", "✏️ Edit");
-      const deleteButton = makeElement("button", "delete-button", "🗑️ Hapus");
-      editButton.type = "button";
-      deleteButton.type = "button";
-      editButton.addEventListener("click", () => startEdit(record, isTeacher));
-      deleteButton.addEventListener("click", () => deleteRecord(record, isTeacher));
-      actions.append(editButton, deleteButton);
-      body.appendChild(actions);
+function inisial(nama) {
+  if (!nama) return "?";
+  return nama.split(" ").filter(Boolean).slice(0, 2).map((k) => k[0].toUpperCase()).join("");
+}
 
-      card.appendChild(body);
-      return card;
-    }
+function formatTanggal(teks) {
+  if (!teks) return "";
+  return new Date(teks + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
 
-    function renderCards() {
-      const list = mode === "siswa" ? students : teachers;
-      const query = $("search").value.trim().toLocaleLowerCase("id");
-      const selectedClass = $("filter").value;
+function tampilkanPesan(teks, galat) {
+  elDaftar.replaceChildren(el("p", "pesan" + (galat ? " galat" : ""), teks));
+}
 
-      const filtered = list.filter((record) => {
-        const identifier = mode === "siswa" ? record.nis : record.nip;
-        const matchesQuery =
-          String(record.nama || "").toLocaleLowerCase("id").includes(query) ||
-          String(identifier || "").toLocaleLowerCase("id").includes(query);
-        const matchesClass = mode === "guru" || !selectedClass || record.kelas === selectedClass;
-        return matchesQuery && matchesClass;
-      });
+function isiPilihanKelas() {
+  elKelas.innerHTML = '<option value="">Semua Kelas / Mapel</option>';
+  const daftarGrup = [...new Set(semuaData.map((d) => d.grup).filter(Boolean))].sort();
+  daftarGrup.forEach((g) => {
+    const opsi = el("option", "", g);
+    opsi.value = g;
+   elkelas.appendchild(opsi);
+  });
+}
 
-      $("count").textContent = `${filtered.length} dari ${list.length} ${mode === "siswa" ? "siswa" : "guru"}`;
-      $("cards").replaceChildren();
-
-      if (filtered.length === 0) {
-        showEmpty(list.length ? "Data tidak ditemukan." : "Belum ada data. Tekan “+ Tambah Data” untuk menambahkan.");
-        $("count").textContent = `0 dari ${list.length} ${mode === "siswa" ? "siswa" : "guru"}`;
-        return;
-      }
-
-      filtered.forEach((record) => {
-        $("cards").appendChild(makeCard(record, mode === "guru"));
-      });
-    }
-
-    function updateClassFilter() {
-      const select = $("filter");
-      const previousValue = select.value;
-      select.replaceChildren();
-
-      const allOption = makeElement("option", "", "Semua kelas");
-      allOption.value = "";
-      select.appendChild(allOption);
-
-      const classes = [...new Set(students.map((student) => student.kelas).filter(Boolean))]
-        .sort((a, b) => String(a).localeCompare(String(b), "id"));
-
-      classes.forEach((className) => {
-        const option = makeElement("option", "", className);
-        option.value = className;
-        select.appendChild(option);
-      });
-
-      select.value = classes.includes(previousValue) ? previousValue : "";
-    }
-
-    function switchMode(nextMode) {
-      mode = nextMode;
-      cancelEdit();
-      $("search").value = "";
-
-      const showingStudents = mode === "siswa";
-      $("showStudents").classList.toggle("active", showingStudents);
-      $("showTeachers").classList.toggle("active", !showingStudents);
-      $("showStudents").setAttribute("aria-pressed", String(showingStudents));
-      $("showTeachers").setAttribute("aria-pressed", String(!showingStudents));
-
-      $("pageTitle").textContent = showingStudents ? "Biodata Siswa" : "Data Guru";
-      $("pageDescription").textContent = showingStudents
-        ? "Data siswa Teknik Komputer dan Jaringan."
-        : "Direktori guru Teknik Komputer dan Jaringan.";
-      $("search").placeholder = showingStudents ? "Cari nama atau NIS" : "Cari nama atau NIP";
-      $("filter").hidden = !showingStudents;
-
-      if (showingStudents) loadStudents();
-      else loadTeachers();
-    }
-
-    function configureForm() {
-      const isTeacher = mode === "guru";
-      $("formTitle").textContent = editing
-        ? (isTeacher ? "Edit Data Guru" : "Edit Data Siswa")
-        : (isTeacher ? "Tambah Guru" : "Tambah Siswa");
-      $("idLabel").textContent = isTeacher ? "NIP / ID Guru *" : "NIS *";
-      $("identity").readOnly = editing;
-      $("classField").hidden = isTeacher;
-      $("genderField").hidden = isTeacher;
-      $("subjectField").hidden = !isTeacher;
-      $("positionField").hidden = !isTeacher;
-      $("className").required = !isTeacher;
-      $("gender").required = !isTeacher;
-      $("subject").required = isTeacher;
-      $("saveButton").textContent = editing ? "Simpan Perubahan" : "Simpan Data";
-    }
-
-    function openAddForm() {
-      editing = false;
-      originalRecord = null;
-      $("dataForm").reset();
-      $("formStatus").hidden = true;
-      configureForm();
-      $("formPanel").hidden = false;
-      $("formPanel").scrollIntoView({ behavior: "smooth", block: "start" });
-      $("identity").focus();
-    }
-
-    function cancelEdit() {
-      editing = false;
-      originalRecord = null;
-      $("dataForm").reset();
-      $("formPanel").hidden = true;
-      $("formStatus").hidden = true;
-      $("identity").readOnly = false;
-    }
-
-    function startEdit(record, isTeacher) {
-      mode = isTeacher ? "guru" : "siswa";
-      editing = true;
-      originalRecord = { ...record };
-      $("dataForm").reset();
-      configureForm();
-
-      $("identity").value = isTeacher ? record.nip : record.nis;
-      $("name").value = record.nama || "";
-      $("photo").value = record.foto_url || "";
-
-      if (isTeacher) {
-        $("subject").value = record.mata_pelajaran || "";
-        $("position").value = record.jabatan || "";
-      } else {
-        $("className").value = record.kelas || "";
-        $("gender").value = record.jenis_kelamin || "";
-      }
-
-      $("formStatus").hidden = true;
-      $("formPanel").hidden = false;
-      $("formPanel").scrollIntoView({ behavior: "smooth", block: "start" });
-      $("name").focus();
-    }
-
-    async function deleteRecord(record, isTeacher) {
-      const confirmed = window.confirm(
-        `Yakin ingin menghapus data ${record.nama || "ini"}? Tindakan ini tidak dapat dibatalkan.`
-      );
-      if (!confirmed) return;
+elCari.addEventListener("input", tampilkanData);
+elKelas.addEventListener("change", tampilkanData);
+elRole.addEventListener("change", tampilkanData);
+   
+muatData();
+</script>
+</body>
+</html>
