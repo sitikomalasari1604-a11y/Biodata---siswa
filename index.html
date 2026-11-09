@@ -301,18 +301,63 @@ function isiPilihanKelas() {
   daftarGrup.forEach((g) => {
     const opsi = el("option", "", g);
     opsi.value = g;
-    elKelas.appendChild(opsi);
+   elkelas.appendchild(opsi);
   });
 }
 
 elCari.addEventListener("input", tampilkanData);
 elKelas.addEventListener("change", tampilkanData);
 elRole.addEventListener("change", tampilkanData);
-// Fungsi untuk menangani tombol Tambah Data
+// Membuka modal form
 function bukaFormTambah() {
-    alert("Form tambah data belum dibuat. Silakan buat form inputnya.");
-    // Atau jika Anda ingin mengarahkannya ke halaman/form lain, tulis kodenya di sini
+    document.getElementById("modalTambah").style.display = "flex";
 }
+
+// Menutup modal form
+function tutupFormTambah() {
+    document.getElementById("modalTambah").style.display = "none";
+}
+
+// Proses Simpan Data ke Supabase
+document.getElementById("formTambah").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const role = document.getElementById("tambahRole").value;
+    const nama = document.getElementById("tambahNama").value;
+    const nisNip = document.getElementById("tambahNis").value;
+    const kelasJurusan = document.getElementById("tambahKelas").value;
+
+    let targetTabel = "";
+    let dataBaru = {};
+
+    if (role === "Guru") {
+        targetTabel = "guru";
+        dataBaru = {
+            nama_guru: nama,   // Sesuai dengan kolom di tabel Supabase guru
+            nip: nisNip,
+            jurusan: kelasJurusan
+        };
+    } else {
+        targetTabel = "siswa";
+        dataBaru = {
+            nama: nama,
+            nis: nisNip,
+            kelas: kelasJurusan
+        };
+    }
+
+    const { error } = await db.from(targetTabel).insert([dataBaru]);
+
+    if (error) {
+        alert("Gagal menyimpan data: " + error.message);
+    } else {
+        alert("Data berhasil ditambahkan!");
+        tutupFormTambah();
+        muatData(); 
+        this.reset();
+    }
+});
+
 
 muatData();
 </script>
